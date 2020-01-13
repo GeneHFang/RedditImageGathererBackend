@@ -5,5 +5,5 @@ class User < ApplicationRecord
     has_many :images, through: :user_images
     has_many :subreddits, through: :user_subreddits
 
-    validates :name, uniqueness: true
+    validates :username, uniqueness: true
 end
