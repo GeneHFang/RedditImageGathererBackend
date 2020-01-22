@@ -47,7 +47,7 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
 
   #Ngrok
-  config.hosts << "d8b23e11.ngrok.io"
+  config.hosts << "7f24f26f.ngrok.io"
 
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.

@@ -8,16 +8,28 @@ class Api::V1::ImagesController < ApplicationController
 
     def create
         user = User.find(image_params[:user_id])
+    
         obj = {
             url: image_params[:url],
             file_type: image_params[:file_type],
-            subreddit_name: image_params[:subreddit_name]
+            subreddit_name: image_params[:subreddit_name],
+            nsfw: image_params[:nsfw],
+            upvotes: image_params[:upvotes],
+            web_url: image_params[:web_url]
         }
+        subredditurl = "https://reddit.com/r/#{obj[:subreddit_name]}"
         image = Image.new(obj)
+        subreddit = Subreddit.new({name: obj[:name],
+                                  url: subredditurl
+                                })
         
         if image.valid?
             image.save()
+            if subreddit.valid?
+                subreddit.save()
+            end
             UserImage.create({user: user, image: image})
+            UserSubreddit.create({user: user, subreddit: subreddit})
             render json: Api::V1::ImageSerializer.new(image)
         else
             render json: image.errors, status: :unprocessable_entity
@@ -51,7 +63,7 @@ class Api::V1::ImagesController < ApplicationController
     end
 
     def image_params
-        params.require(:image).permit(:url, :file_type, :upvotes, :nsfw, :user_id, :subreddit_name)
+        params.require(:image).permit(:url, :file_type, :upvotes, :nsfw, :user_id, :subreddit_name, :web_url)
     end
 
 end
