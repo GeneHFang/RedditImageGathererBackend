@@ -19,7 +19,7 @@ class Api::V1::ImagesController < ApplicationController
         }
         subredditurl = "https://reddit.com/r/#{obj[:subreddit_name]}"
         image = Image.new(obj)
-        subreddit = Subreddit.new({name: obj[:name],
+        subreddit = Subreddit.new({name: obj[:subreddit_name],
                                   url: subredditurl
                                 })
         
